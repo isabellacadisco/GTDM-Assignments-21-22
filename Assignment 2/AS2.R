@@ -48,11 +48,11 @@ rankMatrix(M)
 rankMatrix(Mbest)
 
 #Q2
-#look for the similarity of the customers:
-S<-M%*%svd_result$v[,1:2]
-S
+
 #compute cos(theta) between all
  #let's compute his scores with respect to the "concepts"
+#assume b is a new customers c(1,2,3,0,0)
+b<-c(1,2,3,0,0)
   scoreb<-b%*%svd_result$v[,1:2]
 scoreb
 #let's compute his scores in the "aspects"
@@ -68,6 +68,6 @@ for (i in c(1:dim(Scores_customers)[1])){
 similarity
 
 pheatmap(similarity, how_colnames = TRUE, show_colnames = TRUE, cluster_rows = FALSE,cluster_cols = FALSE, display_numbers = TRUE, legend = FALSE)
-pheatmap(similarity, how_colnames = TRUE, show_colnames = TRUE, cluster_rows = TRUE,cluster_cols = FALSE, display_numbers = TRUE, legend = FALSE)
+pheatmap(similarity, how_colnames = TRUE, show_colnames = TRUE, cluster_rows = TRUE,cluster_cols = TRUE, display_numbers = TRUE, legend = FALSE)
 #OR
 plot(similarity)
