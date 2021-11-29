@@ -66,7 +66,7 @@ names(results) = S
 results
 
 
-#probability distribution starting from a different inital distribution
+#probability distribution starting from a different inital distribution--------
 
 m_1 <- c(0.3,0.7,0)
 
@@ -107,4 +107,15 @@ ggplot() +
 results_1 = evolution_1_df[n_it,]
 names(results_1) = S
 results_1
+#-----------------------------------------
 
+#total variation
+tot_var = function(v1,v2){
+  sum(abs(v1-v2))/2
+}
+
+pi
+results
+
+paste('tot var naive - lin sys: ',
+      tot_var(results, pi))
