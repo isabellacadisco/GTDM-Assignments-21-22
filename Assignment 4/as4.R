@@ -35,7 +35,7 @@ plot_dendrogram(y)
 #plot hierarchical clustering
 y1<-as.hclust(y)
 plot(y1)
-# draw blue borders around clusters
+# draw pink borders around clusters
 clusters.list = rect.hclust(y1, k = 5, border="pink")
 #2.2
 x1<-induced_subgraph(x, 1:70)
@@ -49,4 +49,54 @@ adjmat1
 d<- degree(x1)
 d
 table(d)
-time_bins(x, middle = TRUE)
+
+#Histogram of node degree 
+V(x1)$label <- V(x1)$name
+V(x1)$degree <- degree(x1)
+hist(V(x1)$degree,
+     col = 'green',
+     main = 'Histogram of Node Degree',
+     ylab = 'Frequency',
+     xlab = 'Degree of Vertices')
+
+hs <- hub_score(x1)$vector
+set.seed(123)
+plot(x1,
+     vertex.size=hs*30,
+     main = 'Hubs',
+     vertex.color = rainbow(52),
+     edge.arrow.size=0.1,
+     layout = layout.kamada.kawai)
+
+#2nd part
+#Find the most closness
+closeness.cent <- closeness(x1, mode="all")
+closeness.cent
+#node 55
+
+#Find the mean time (x: the 1st one who got infected by the fake news)
+set.seed(12345)
+I <- matrix(rep(0,times = 70),ncol = 1)
+I[x] <- 1
+v= rep(0,times = 100)
+
+for (i in 1:100){
+  NI <- I
+  t <-0
+  while (sum(NI) < 70){
+    Matrix1 <- as.matrix(adjmat1)
+    Num_Inf <- Matrix1 %*% NI
+    P_inf <- Num_Inf*0.2 + NI
+    P_inf[P_inf > 1] <- 1
+    R_vector <- runif(70, min = 0, max = 1)
+    NI <- P_inf > R_vector
+    sum(NI)
+    t <- t+1
+    
+  }
+  v[i] = t
+  
+}
+
+mean(v)
+
